@@ -13,12 +13,17 @@ public_users.post("/register", (req, res) => {
       .json({ message: "Username and password are not provided!" });
   }
 
+  if(!isValid(username)){
+    return res.status(400).send({message: "Invalid username"})
+  }
+  
   const isExist = users.find((u) => u.username === username);
   if (isExist) {
     return res
       .status(400)
       .json({ message: "User with the provided name is already exist!" });
   }
+
 
   users.push({ username, password });
 
